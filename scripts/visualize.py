@@ -124,3 +124,42 @@ print("✅ Plot 5 saved — Sentiment Over Time")
 
 print("\n✅ All 5 plots saved to data/plots/")
 print("Open the data/plots/ folder to view them!")
+# ─────────────────────────────────────────
+# PLOT 6: Pain Points per Bank (Negative reviews by theme)
+# ─────────────────────────────────────────
+negative_df = df[df['sentiment_label'] == 'negative']
+pain_points = negative_df.groupby(
+    ['bank', 'identified_theme']
+).size().unstack(fill_value=0)
+
+fig, ax = plt.subplots(figsize=(12, 6))
+pain_points.plot(kind='bar', ax=ax, colormap='Reds')
+ax.set_title('Pain Points — Negative Reviews by Theme per Bank',
+             fontsize=14, fontweight='bold')
+ax.set_xlabel('Bank')
+ax.set_ylabel('Number of Negative Reviews')
+ax.tick_params(axis='x', labelrotation=15)
+plt.tight_layout()
+plt.savefig('data/plots/plot6_pain_points.png', dpi=150)
+plt.close()
+print("✅ Plot 6 saved — Pain Points")
+
+# ─────────────────────────────────────────
+# PLOT 7: Satisfaction Drivers (Positive reviews by theme)
+# ─────────────────────────────────────────
+positive_df = df[df['sentiment_label'] == 'positive']
+drivers = positive_df.groupby(
+    ['bank', 'identified_theme']
+).size().unstack(fill_value=0)
+
+fig, ax = plt.subplots(figsize=(12, 6))
+drivers.plot(kind='bar', ax=ax, colormap='Greens')
+ax.set_title('Satisfaction Drivers — Positive Reviews by Theme per Bank',
+             fontsize=14, fontweight='bold')
+ax.set_xlabel('Bank')
+ax.set_ylabel('Number of Positive Reviews')
+ax.tick_params(axis='x', labelrotation=15)
+plt.tight_layout()
+plt.savefig('data/plots/plot7_satisfaction_drivers.png', dpi=150)
+plt.close()
+print("✅ Plot 7 saved — Satisfaction Drivers")
