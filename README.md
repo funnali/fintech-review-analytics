@@ -108,4 +108,52 @@ fintech-review-analytics/
 ├── schema.sql                     # database schema
 ├── requirements.txt
 └── README.md
+## Database Setup (Task 3)
+
+### Prerequisites
+- PostgreSQL 18 installed and running
+- Database created: `bank_reviews`
+
+### Create the Database
+```bash
+psql -U postgres -c "CREATE DATABASE bank_reviews;"
 ```
+
+### Create Tables
+```bash
+python scripts/setup_db.py
+```
+
+### Insert Data
+```bash
+python scripts/insert_data.py
+```
+
+### Schema
+Two tables are used:
+
+**banks** table:
+- bank_id (PRIMARY KEY)
+- bank_name (UNIQUE)
+- app_name
+
+**reviews** table:
+- review_id (PRIMARY KEY)
+- bank_id (FOREIGN KEY → banks)
+- review_text
+- rating (1–5)
+- review_date
+- sentiment_label
+- sentiment_score
+- identified_theme
+- source
+
+### Verification Results
+After insertion, verification queries confirmed:
+- CBE: 377 reviews, avg rating 3.93 stars
+- BOA: 378 reviews, avg rating 3.23 stars  
+- Dashen: 383 reviews, avg rating 3.68 stars
+- Total: 1,138 reviews inserted
+- Null review_text: 0
+- Null ratings: 0
+- Null sentiment: 0
